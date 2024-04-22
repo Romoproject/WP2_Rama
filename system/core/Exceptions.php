@@ -158,9 +158,9 @@ class CI_Exceptions {
 	public function show_error($heading, $message, $template = 'error_general', $status_code = 500)
 	{
 		$templates_path = config_item('error_views_path');
-		if (empty($templates_path))
+		if (empty($template_path))
 		{
-			$templates_path = VIEWPATH.'errors'.DIRECTORY_SEPARATOR;
+			$template_path = VIEWPATH.'errors'.DIRECTORY_SEPARATOR;
 		}
 
 		if (is_cli())
@@ -180,7 +180,7 @@ class CI_Exceptions {
 			ob_end_flush();
 		}
 		ob_start();
-		include($templates_path.$template.'.php');
+		include($template_path.$template.'.php');
 		$buffer = ob_get_contents();
 		ob_end_clean();
 		return $buffer;
@@ -190,10 +190,10 @@ class CI_Exceptions {
 
 	public function show_exception($exception)
 	{
-		$templates_path = config_item('error_views_path');
-		if (empty($templates_path))
+		$template_path = config_item('error_views_path');
+		if (empty($template_path))
 		{
-			$templates_path = VIEWPATH.'errors'.DIRECTORY_SEPARATOR;
+			$template_path = VIEWPATH.'errors'.DIRECTORY_SEPARATOR;
 		}
 
 		$message = $exception->getMessage();
@@ -204,11 +204,11 @@ class CI_Exceptions {
 
 		if (is_cli())
 		{
-			$templates_path .= 'cli'.DIRECTORY_SEPARATOR;
+			$template_path .= 'cli'.DIRECTORY_SEPARATOR;
 		}
 		else
 		{
-			$templates_path .= 'html'.DIRECTORY_SEPARATOR;
+			$template_path .= 'html'.DIRECTORY_SEPARATOR;
 		}
 
 		if (ob_get_level() > $this->ob_level + 1)
@@ -217,7 +217,7 @@ class CI_Exceptions {
 		}
 
 		ob_start();
-		include($templates_path.'error_exception.php');
+		include($template_path.'error_exception.php');
 		$buffer = ob_get_contents();
 		ob_end_clean();
 		echo $buffer;
@@ -236,10 +236,10 @@ class CI_Exceptions {
 	 */
 	public function show_php_error($severity, $message, $filepath, $line)
 	{
-		$templates_path = config_item('error_views_path');
-		if (empty($templates_path))
+		$template_path = config_item('error_views_path');
+		if (empty($template_path))
 		{
-			$templates_path = VIEWPATH.'errors'.DIRECTORY_SEPARATOR;
+			$template_path = VIEWPATH.'errors'.DIRECTORY_SEPARATOR;
 		}
 
 		$severity = isset($this->levels[$severity]) ? $this->levels[$severity] : $severity;
@@ -266,7 +266,7 @@ class CI_Exceptions {
 			ob_end_flush();
 		}
 		ob_start();
-		include($templates_path.$template.'.php');
+		include($template_path.$template.'.php');
 		$buffer = ob_get_contents();
 		ob_end_clean();
 		echo $buffer;
